@@ -23,6 +23,15 @@ header {
     z-index: 1;
 }
 
+header h1 {
+    height: 64px;
+    width: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+}
+
 header div {
     height: 64px;
     width: 96px;
