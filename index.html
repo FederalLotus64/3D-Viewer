@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/main.js"></script>
+    <script type="module" src="js/render.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>3D-Viewer</title>
+</head>
+<body>
+    <header>
+        <div class="import">Import</div>
+        <div class="tools">Tools</div>
+        <div class="dropdown-import">
+            <label for="OBJ">OBJ-file</label>
+            <input type="file" id="OBJ" hidden>
+            <label for="MTL">MTL-file</label>
+            <input type="file" id="MTL" hidden>
+        </div>
+        <div class="dropdown-tools">
+            <div class="container">
+                <h2>Move</h2>
+                <input type="number">X
+                <input type="number">Y
+                <input type="number">Z
+            </div>
+            <div class="container">
+                <h2>Rotate</h2>
+                <input type="range" min="-180" max="180">X   
+                <input type="range" min="-180" max="180">Y
+                <input type="range" min="-180" max="180">Z
+            </div>
+            <div class="container">
+                <h2>Scale</h2>
+                <input type="number">X
+                <input type="number">Y
+                <input type="number">Z
+            </div>
+            <div class="container">
+                <h2>Camera</h2>
+                <button>Auto-Fit</button>
+                <input type="number">FOV
+                <input type="number">Cut-off
+                <input type="number">Position
+            </div>
+        </div>
+    </header>
+    <main></main>
+</body>
+</html>
