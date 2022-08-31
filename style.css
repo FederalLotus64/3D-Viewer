@@ -23,7 +23,7 @@ header {
     z-index: 1;
 }
 
-header h1 {
+header h2 {
     height: 64px;
     width: 96px;
     display: flex;
