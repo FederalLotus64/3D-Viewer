@@ -25,7 +25,7 @@ header {
 
 header h2 {
     height: 64px;
-    width: 96px;
+    width: 128px;
     display: flex;
     align-items: center;
     justify-content: center;
