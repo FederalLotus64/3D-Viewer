@@ -1,6 +1,6 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
 import {OBJLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/OBJLoader.js';
-import {MTLLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/MTLLoader.js';
+//import {MTLLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/MTLLoader.js';
 import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
 
 let scene, camera, controls, renderer, object;
@@ -11,8 +11,8 @@ setTimeout(() => { Animate(); }, 500);
 function Initialize() {
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 2000);
-    camera.position.x = 10;
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 1000);
+    camera.position.x = 100;
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -34,7 +34,9 @@ function Initialize() {
     let amblight = new THREE.AmbientLight(0x404040, 0.5);
     scene.add(amblight);    
 
-    window.addEventListener('resize', onWindowResize);   
+    window.addEventListener('resize', onWindowResize);  
+    
+    LoadOBJ("models/template.obj");
 }
 
 function onWindowResize() {
@@ -44,6 +46,10 @@ function onWindowResize() {
 }
 
 function LoadOBJ(path) {
+    while (scene.children.length > 2) {
+        scene.remove(scene.children[scene.children.length-1]);
+    }
+
     let loader = new OBJLoader();
     loader.load(
         path, 
@@ -57,7 +63,7 @@ function LoadOBJ(path) {
     );
 }
 
-function LoadOBJMTL(path, url) {
+/*function LoadOBJMTL(path, url) {
     var mtlLoader = new MTLLoader();
     mtlLoader.load("models/" + url, function( materials ) {
         materials.preload();
@@ -73,15 +79,15 @@ function LoadOBJMTL(path, url) {
             (err) => { console.error("Could not load " + path); }
         );
     });
-}
+}*/
 
 function Animate() {
 	requestAnimationFrame(Animate);
 	renderer.render(scene, camera);
 }
 
-document.querySelector("#OBJ").oninput = () => {
-    let file = document.querySelector("#OBJ").files[0];
+document.querySelector("#import").oninput = () => {
+    let file = document.querySelector("#import").files[0];
     let reader = new FileReader();
 
     reader.addEventListener("load", () => {
@@ -93,47 +99,41 @@ document.querySelector("#OBJ").oninput = () => {
     }
 }
 
-document.querySelector("button").onclick = () => {
-    let box = new THREE.Box3();
-    box.setFromObject(object);
-    camera.position.x = 3*(box.max.y - box.min.y);
-}
-
 let inputs = document.querySelectorAll("input");
+inputs[0].onchange = () => {
+    object.position.x = inputs[0].value;
+}
+inputs[1].onchange = () => {
+    object.position.y = inputs[1].value;
+}
 inputs[2].onchange = () => {
-    object.position.x = inputs[2].value;
+    object.position.z = inputs[2].value;
 }
 inputs[3].onchange = () => {
-    object.position.y = inputs[3].value;
+    object.rotation.x = (inputs[3].value)*Math.PI/180;
 }
 inputs[4].onchange = () => {
-    object.position.z = inputs[4].value;
+    object.rotation.y = (inputs[4].value)*Math.PI/180;
 }
-inputs[5].oninput = () => {
-    object.rotation.x = (inputs[5].value)*Math.PI/180;
+inputs[5].onchange = () => {
+    object.rotation.z = (inputs[5].value)*Math.PI/180;
 }
-inputs[6].oninput = () => {
-    object.rotation.y = (inputs[6].value)*Math.PI/180;
+inputs[6].onchange = () => {
+    object.scale.x = inputs[6].value;
 }
-inputs[7].oninput = () => {
-    object.rotation.z = (inputs[7].value)*Math.PI/180;
+inputs[7].onchange = () => {
+    object.scale.y = inputs[7].value;
 }
 inputs[8].onchange = () => {
-    object.scale.x = inputs[8].value;
+    object.scale.z = inputs[8].value;
 }
 inputs[9].onchange = () => {
-    object.scale.y = inputs[9].value;
-}
-inputs[10].onchange = () => {
-    object.scale.z = inputs[10].value;
-}
-inputs[11].onchange = () => {
-    camera.fov = inputs[11].value;
+    camera.fov = inputs[9].value;
     camera.updateProjectionMatrix();
 }
-inputs[12].onchange = () => {
-    camera.far = inputs[12].value;
+inputs[10].onchange = () => {
+    camera.far = inputs[10].value;
 }
-inputs[13].onchange = () => {
-    camera.position.x = inputs[13].value;
+inputs[11].onchange = () => {
+    camera.position.x = inputs[11].value;
 }
